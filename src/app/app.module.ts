@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
-import { CourseReducer } from './store/reducers/course.reducer';
 import { FormsModule } from '@angular/forms';
 import { reducers } from './store/reducers/';
+import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -12,6 +14,10 @@ import { reducers } from './store/reducers/';
     BrowserModule,
     FormsModule,
     StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
