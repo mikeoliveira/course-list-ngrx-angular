@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CourseItem } from './store/models/courseItem.model';
 import { AppState } from './store/models/app-state.model';
 import { NgForm } from '@angular/forms';
@@ -15,9 +15,12 @@ export class AppComponent implements OnInit {
   courses!: any;
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
-    this.courseItems$ = this.store.select((store) => store.course);
-    this.courseItems$.subscribe((res) => this.courses = res);
-    console.log(this.courses);
+    this.courseItems$ = this.store.select((store) => store.course).pipe(
+      map((resp:any) => {
+        console.log(resp);
+        return resp.course;
+      })
+    );
   }
 
   addCourse(form: NgForm) {
